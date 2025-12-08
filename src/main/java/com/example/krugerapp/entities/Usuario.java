@@ -14,5 +14,6 @@ public class Usuario {
     private Long id;
     private String usuarioNome;
     private String usuarioSenha;
+    private String role;
 
 }

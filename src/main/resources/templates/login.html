@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Customizado</title>
+</head>
+<body>
+<h2>Faça seu login</h2>
+<form method="post" action="/doLogin">
+    <label for="username">Usuário:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Entrar</button>
+</form>
+
+<div th:if="${param.error}">
+    Usuário ou senha inválidos.
+</div>
+<div th:if="${param.logout}">
+    Logout realizado com sucesso.
+</div>
+</body>
+</html>
