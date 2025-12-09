@@ -20,11 +20,24 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByUsuarioNome(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+
+        String role = usuario.getRole();
+        if (role == null || role.trim().isEmpty()) {
+            role = "USER"; // Role padrão se não estiver definido
+        }
+
+        // Log para debug - REMOVER EM PRODUÇÃO
+        System.out.println("=== DEBUG LOGIN ===");
+        System.out.println("Usuário encontrado: " + usuario.getUsuarioNome());
+        System.out.println("Senha no banco (primeiros 20 chars): " + 
+            (usuario.getUsuarioSenha() != null ? usuario.getUsuarioSenha().substring(0, Math.min(20, usuario.getUsuarioSenha().length())) : "null"));
+        System.out.println("Role: " + role);
+        System.out.println("==================");
 
         return User.withUsername(usuario.getUsuarioNome())
                 .password(usuario.getUsuarioSenha())
-                .roles(usuario.getRole())
+                .roles(role)
                 .build();
     }
 }
