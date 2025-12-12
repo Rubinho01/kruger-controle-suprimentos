@@ -11,20 +11,22 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String itemName;
-    private String itemQuantity;
+    private String itemEmpresa;
+    private String itemNome;
+    private String itemQuantidade;
     @Column(nullable = true)
-    private String sellerName;
+    private String vendedorNome;
 
     public Item() {
 
     }
 
-    public Item(Long id, String itemName, String itemQuantity, String sellerName) {
+    public Item(Long id, String itemEmpresa, String itemName, String itemQuantity, String sellerName) {
         this.id = id;
-        this.itemName = itemName;
-        this.itemQuantity = itemQuantity;
-        this.sellerName = sellerName;
+        this.itemEmpresa = itemEmpresa;
+        this.itemNome = itemNome;
+        this.itemQuantidade = itemQuantidade;
+        this.vendedorNome = vendedorNome;
     }
 
 
