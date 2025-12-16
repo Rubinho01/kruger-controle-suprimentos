@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const sequelize  = require('./config/database');
+
+//modelos
+require('./models/Usuario');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -37,5 +41,20 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Sync database
+(async () => {
+  try {
+    // Testar conexão primeiro
+    await sequelize.authenticate();
+    console.log('Conexão com a database realizada!');
+    
+    // Sincronizar modelos
+    await sequelize.sync({force: true});
+    console.log('Database sincronizada!');
+  } catch (error) {
+    console.error('Erro durante conexão da database:', error);
+  }
+})();
 
 module.exports = app;
