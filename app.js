@@ -26,6 +26,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+//SESSAO===================================================================================
+
+const session = require('express-session');
+const pgSession = require('express-pg-session')(session);
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pgPool = new Pool({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+});
+
+
+app.use(session({
+  store: new pgSession({
+    pool: pgPool,
+    tableName: 'session',
+  }),
+  secret: process.env.SESSION_SECRET || 'fallback-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    sameSite: 'none'
+  }
+}));
+//=======================================================================================
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
