@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Krüger Embalagens</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="card">
+
+        <img src="/images/logo.png" alt="Krüger Embalagens" class="logo">
+
+        <h2>Pedidos de Compra</h2>
+
+        <form method="post" action="/users/login">
+
+            <label for="name">Usuário:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error">
+                <h3><%= error.message %></h3>
+            </div>
+        <% } %>
+
+    </div>
+</div>
+</body>
+</html>
