@@ -30,15 +30,13 @@ const pgSession = require('express-pg-session')(session);
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pgPool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
-
 
 app.use(session({
   store: new pgSession({
@@ -49,8 +47,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
-    httpOnly: true,
+    secure: true,
     sameSite: 'none'
   }
 }));
