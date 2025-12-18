@@ -30,7 +30,7 @@ const pgSession = require('express-pg-session')(session);
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
+const pgPool = new Pool({
   connectionString: process.env.DB_URL,
   ssl: {
     require: true,
