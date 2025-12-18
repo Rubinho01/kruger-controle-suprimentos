@@ -6,10 +6,15 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^17.2.3",
     "ejs": "~2.6.1",
+    "env": "^0.0.2",
     "express": "~4.16.1",
+    "express-pg-session": "^1.1.0",
+    "express-session": "^1.18.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pg": "^8.16.3",

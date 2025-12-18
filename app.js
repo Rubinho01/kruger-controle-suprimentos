@@ -3,9 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const sequelize  = require('./config/database');
+
+//modelos
+require('./models/user');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/userRoutes');
 
 var app = express();
 
@@ -19,8 +23,40 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//SESSAO===================================================================================
+
+const session = require('express-session');
+const pgSession = require('express-pg-session')(session);
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
+});
+
+app.use(session({
+  store: new pgSession({
+    pool: pgPool,
+    tableName: 'session',
+  }),
+  secret: process.env.SESSION_SECRET || 'fallback-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true,
+    sameSite: 'none'
+  }
+}));
+//=======================================================================================
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,5 +73,20 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// Sync database
+(async () => {
+  try {
+    // Testar conexão primeiro
+    await sequelize.authenticate();
+    console.log('Conexão com a database realizada!');
+    
+    // Sincronizar modelos
+    await sequelize.sync({force: true});
+    console.log('Database sincronizada!');
+  } catch (error) {
+    console.error('Erro durante conexão da database:', error);
+  }
+})();
 
 module.exports = app;
