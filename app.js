@@ -83,7 +83,7 @@ app.use(function(err, req, res, next) {
     console.log('Conexão com a database realizada!');
     
     // Sincronizar modelos
-    await sequelize.sync({force: true});
+    await sequelize.sync();
     console.log('Database sincronizada!');
   } catch (error) {
     console.error('Erro durante conexão da database:', error);
