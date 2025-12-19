@@ -32,6 +32,7 @@ require('dotenv').config();
 
 const pgPool = new Pool({
   connectionString: process.env.DB_URL,
+  database: process.env.DB_NAME,
   ssl: {
     require: true,
     rejectUnauthorized: false,
