@@ -7,6 +7,7 @@ const sequelize  = require('./config/database');
 
 //modelos
 require('./models/user');
+require('./models/brand');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoutes');
