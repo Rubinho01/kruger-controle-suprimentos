@@ -8,7 +8,7 @@ const brand = sequelize.define('brands', {
     autoIncrement: true
    },
    name: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
     allowNull: false
    }
 });
