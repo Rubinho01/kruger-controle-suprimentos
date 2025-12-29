@@ -5,8 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const sequelize  = require('./config/database');
 
-//modelos
+//models
 require('./models/user');
+require('./models/brand');
+require('./models/product');
+
+//models associations 
+require('./models/associations');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoutes');
