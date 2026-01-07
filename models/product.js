@@ -19,6 +19,11 @@ const product = sequelize.define('products', {
     lastPrice: {
         allowNull: true,
         type: DataTypes.STRING
+    },
+    orded: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 });
 
