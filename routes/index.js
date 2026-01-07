@@ -11,7 +11,9 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next){
-  res.render('right');
+  console.log(req.session.userName);
+  console.log(req.session.userId);
+  res.render('dashboard', {name: req.session.userName});
 })
 
 

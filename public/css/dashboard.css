@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #333;
+}
+
+/* ===== HEADER ===== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #6fa8dc;
+  color: #fff;
+}
+
+.logo {
+  width: 120px;
+  height: 40px;
+  background: rgba(255,255,255,0.3); /* placeholder */
+  border-radius: 6px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===== FILTROS ===== */
+.filters {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.filters h2 {
+  margin-bottom: 12px;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.filter.active {
+  background: #90aafc;
+  color: #fff;
+}
+
+.add-item {
+  background: #7ed957;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== ITENS ===== */
+.items {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.items h2 {
+  margin-bottom: 12px;
+}
+
+/* Cabeçalho da tabela (desktop) */
+.items-header {
+  display: none;
+  font-weight: bold;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Item */
+.item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  border: none;
+  background: #eee;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button i {
+  margin-right: 6px;
+  font-size: 1rem;
+}
+
+.actions button i {
+  margin-right: 0;
+  font-size: 1.1rem;
+}
+
+.actions button {
+  background: transparent;
+}
+
+.actions button:hover {
+  background: #eaeaea;
+}
+
+
+/* ===== DESKTOP ===== */
+@media (min-width: 768px) {
+
+  .add-item {
+    width: auto;
+    margin-top: 10px;
+  }
+
+  .items-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 120px;
+    gap: 10px;
+  }
+
+  .item {
+    grid-template-columns: 1fr 2fr 1fr 1fr 120px;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+
