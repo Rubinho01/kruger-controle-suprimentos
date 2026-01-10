@@ -68,11 +68,11 @@
       <span>Ações</span>
     </div>
 
+    <% products.forEach(p => { %>
     <div class="item">
-        <span>Bompack</span>
-        <span>Rolo de pano com 500</span>
-        <span>1 rolo</span>
-        <span>Rubem</span>
+        <span><%= p.dataValues.brandName %></span>
+        <span><%= p.name %></span>
+        <span><%= p.quantity %></span>
         <div class="actions">
             <button title="Editar">
                 <i class="bi bi-pencil-square"></i>
@@ -83,7 +83,7 @@
             </button>
        </div>
     </div>
-
+    <% }) %>
   </section>
 
 </main>

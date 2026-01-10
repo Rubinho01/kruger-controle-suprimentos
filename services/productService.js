@@ -15,6 +15,9 @@ async function findAllProducts() {
             model: brands,
             as: 'brand',
             attributes:[]
+        },
+        where: {
+            orded: false
         }
     });
 
