@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const productController = require('../controllers/productController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,11 +11,7 @@ router.get('/login', function(req, res, next) {
   res.render('loginForm');
 });
 
-router.get('/dashboard', function(req, res, next){
-  console.log(req.session.userName);
-  console.log(req.session.userId);
-  res.render('dashboard', {name: req.session.userName});
-})
+router.get('/dashboard',productController.loadDashboard );
 
 
 module.exports = router;

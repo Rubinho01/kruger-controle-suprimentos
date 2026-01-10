@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const productModel = require('../models/product');
+const brands = require('../models/brand');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -11,7 +12,8 @@ async function findAllProducts() {
             ]]
         },
         include: {
-            model: brand,
+            model: brands,
+            as: 'brand',
             attributes:[]
         }
     });

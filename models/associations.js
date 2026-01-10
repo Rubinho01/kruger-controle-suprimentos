@@ -8,7 +8,7 @@ brand.hasMany(product, {
 
 product.belongsTo(brand, {
     foreignKey: 'brandId',
-    as: brand
+    as: 'brand'
 });
 
 
