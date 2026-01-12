@@ -15,6 +15,7 @@ require('./models/associations');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoutes');
+var brandRouter = require('./routes/brandRoutes');
 
 var app = express();
 
@@ -64,6 +65,7 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/brand', brandRouter);
 
 
 // catch 404 and forward to error handler
