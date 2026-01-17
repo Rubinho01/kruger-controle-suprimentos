@@ -7,4 +7,9 @@ async function loadDashboard(req, res) {
     res.render('dashboard', {name, products});
 };
 
-module.exports = {loadDashboard};
+async function loadCreateForm(req, res) {
+    const brands = await productService.formBrandNames();
+    res.render('product/createProductForm', {brands});
+}
+
+module.exports = {loadDashboard, loadCreateForm};

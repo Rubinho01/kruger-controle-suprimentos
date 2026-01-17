@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const productModel = require('../models/product');
 const brands = require('../models/brand');
+const brandService = require('./brandService');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -24,5 +25,10 @@ async function findAllProducts() {
     return products;
 }
 
+async function formBrandNames() {
+    const brands = await brandService.findAll();
+    return brands
+}
 
-module.exports = {findAllProducts};
+
+module.exports = {findAllProducts, formBrandNames};

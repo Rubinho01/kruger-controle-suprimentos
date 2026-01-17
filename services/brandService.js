@@ -18,4 +18,10 @@ async function insertBrand(name) {
     return; 
 }
 
-module.exports = {insertBrand};
+async function findAll() {
+    const brands = await brandModel.findAll();
+    return brands;
+    
+}
+
+module.exports = {insertBrand, findAll};
