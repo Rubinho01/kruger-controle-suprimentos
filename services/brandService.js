@@ -18,9 +18,15 @@ async function insertBrand(name) {
     return; 
 }
 
+async function findById(id) {
+    const brand = brandModel.findByPk(id);
+    return brand;
+    
+}
+
 async function findAll() {
     const brands = await brandModel.findAll();
     return brands; 
 }
 
-module.exports = {insertBrand, findAll};
+module.exports = {insertBrand, findAll, findById};

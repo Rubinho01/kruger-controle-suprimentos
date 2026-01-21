@@ -90,6 +90,9 @@
   </style>
 </head>
 <body>
+  <% if(error){ %>
+  <span style="color: red;" >  <%= error %></span>
+  <% } %>
 
   <form action="/product/add" method="post">
   <div class="card">

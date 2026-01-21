@@ -31,8 +31,14 @@ async function formBrandNames() {
 }
 
 async function insertProduct(name, quantity, brandId) {
+    const brandExist = brandService.findById(brandId);
+    if(!brandExist){
+        throw new Error("A marca não está cadastrada no sistema");
+        
+    }
     const exist = await productModel.findOne({
-        where:{name, brandId}
+        where:{name: name, 
+            brandId:brandId}
     });
     if(exist){
         throw new Error("Esse produto já foi cadastrado");   

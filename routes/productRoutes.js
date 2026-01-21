@@ -4,6 +4,8 @@ const productController = require('../controllers/productController');
 
 router.get('/add', productController.loadCreateForm);
 
+router.post('/add', productController.createProduct);
+
 
 
 
