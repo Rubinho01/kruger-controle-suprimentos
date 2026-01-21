@@ -30,5 +30,28 @@ async function formBrandNames() {
     return brands
 }
 
+async function insertProduct(name, quantity, brandId) {
+    const exist = await productModel.findOne({
+        where:{name, brandId}
+    });
+    if(exist){
+        throw new Error("Esse produto já foi cadastrado");   
+    }
 
-module.exports = {findAllProducts, formBrandNames};
+    if(!name && name===''){
+        throw new Error("Digite o nome do produto");
+    }
+
+    if(!quantity || quantity===''){
+        await productModel.create({
+            name, brandId
+        })
+    }else{
+        await productModel.create({
+            name, quantity, brandId
+        })
+    }
+}
+
+
+module.exports = {findAllProducts, formBrandNames, insertProduct};

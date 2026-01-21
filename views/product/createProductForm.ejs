@@ -90,13 +90,14 @@
   </style>
 </head>
 <body>
+
+  <form action="/product/add" method="post">
   <div class="card">
     <div class="header">Cadastrar uma Empresa</div>
 
     <div class="field">
-      <label for="categoria">Empresa:</label>
-      <select id="categoria">
-        <option value="">Selecione</option>
+      <label fr="categoria">Empresa:</label>
+      <select required name="brandId" id="brandId">
         <% brands.forEach(b => { %>
         <option value=<%= b.id %>><%= b.name %></option>
         <% }) %>
@@ -110,15 +111,16 @@
 
     <div class="field">
       <label for="nome">Nome:</label>
-      <input id="nome" type="text" placeholder="Nome do produto" />
+      <input required id="name" name="name" type="text" placeholder="Nome do produto" />
     </div>
 
     <div class="field">
-      <label for="nome">Quantidade:</label>
-      <input id="nome" type="text" placeholder="Quantidade que temos em estoque" />
+      <label for="nome">Quantidade em estoque:</label>
+      <input required id="quantity" name="quantity" type="text" placeholder="Vazio = nenhuma" />
     </div>
 
-    <button class="btn">+ Adicionar Empresa</button>
+    <button type="submit" class="btn">+ Adicionar Produto</button>
   </div>
+  </form>
 </body>
 </html>

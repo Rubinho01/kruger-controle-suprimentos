@@ -20,8 +20,7 @@ async function insertBrand(name) {
 
 async function findAll() {
     const brands = await brandModel.findAll();
-    return brands;
-    
+    return brands; 
 }
 
 module.exports = {insertBrand, findAll};
