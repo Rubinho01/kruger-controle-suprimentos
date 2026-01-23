@@ -4,7 +4,7 @@ const productController = require('../controllers/productController');
 const islogged = require('../middlewares/isLogged')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', islogged, function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 

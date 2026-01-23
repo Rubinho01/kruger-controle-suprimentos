@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const productController = require('../controllers/productController');
+const islogged = require('../middlewares/isLogged');
 
-router.get('/add', productController.loadCreateForm);
+router.get('/add', islogged, productController.loadCreateForm);
 
-router.post('/add', productController.createProduct);
+router.post('/add', islogged, productController.createProduct);
 
 
 
