@@ -38,12 +38,12 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pgPool = new Pool({
-  connectionString: process.env.DB_URL,
-  database: process.env.DB_NAME,
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
 app.use(session({
@@ -55,8 +55,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
-    sameSite: 'none'
+    secure: false,
+    httpOnly: true,
+    sameSite: 'lax'
   }
 }));
 //=======================================================================================
