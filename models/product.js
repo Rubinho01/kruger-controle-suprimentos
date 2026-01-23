@@ -15,7 +15,8 @@ const product = sequelize.define('products', {
     },
     quantity: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: 'Nenhum(a)'
     },
     lastPrice: {
         allowNull: true,

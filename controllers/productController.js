@@ -39,4 +39,17 @@ async function createProduct(req, res) {
     
 }
 
-module.exports = {loadDashboard, loadCreateForm, createProduct};
+async function deleteProduct(req, res, next) {
+    const productId = req.params.id;
+    if(!productId){
+        throw new Error("Identificação do produto não encontrada para exclusão");
+    }
+    try {
+        await productService.deleteById(productId);
+        res.redirect('/dashboard')
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct};

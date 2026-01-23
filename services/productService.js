@@ -67,5 +67,17 @@ async function insertProduct(name, quantity, brandId, identifier) {
     return product;
 }
 
+async function deleteById(productId) {
+    const productExists = productModel.findByPk(productId);
+    if(!productExists){
+        throw new Error("O produto que você quer excluir não foi encontrado");
+    }
+    await productModel.destroy({
+        where:{
+            id: productId
+        }
+    });
+    
+}
 
-module.exports = {findAllProducts, formBrandNames, insertProduct};
+module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById};

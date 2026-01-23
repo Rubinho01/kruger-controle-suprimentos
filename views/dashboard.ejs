@@ -85,13 +85,16 @@
         <span><%= p.quantity %></span>
         <span><%= p.identifier %></span>
         <div class="actions">
+          <a href="#">
             <button title="Editar">
                 <i class="bi bi-pencil-square"></i>
             </button>
-
+          </a>  
+          <a href="/product/delete/<%= p.id %>">
             <button title="Excluir">
                 <i class="bi bi-trash"></i>
             </button>
+          </a>
        </div>
     </div>
     <% }) %>

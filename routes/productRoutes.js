@@ -7,6 +7,8 @@ router.get('/add', islogged, productController.loadCreateForm);
 
 router.post('/add', islogged, productController.createProduct);
 
+router.get('/delete/:id', islogged, productController.deleteProduct);
+
 
 
 
