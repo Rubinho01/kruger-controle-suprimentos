@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastrar produto Faltando</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fdecec;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #6fa8dc;
+      color: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      min-width: 80px;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .field input:disabled {
+      background: #e5e5e5;
+      color: #777;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #7ed957;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        margin: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <% if(error){ %>
+  <span style="color: red;" >  <%= error %></span>
+  <% } %>
+
+  <form action="/product/add" method="post">
+  <div class="card">
+    <div class="header">Cadastrar uma Empresa</div>
+
+    <div class="field">
+      <label fr="categoria">Empresa:</label>
+      <select required name="brandId" id="brandId">
+        <% brands.forEach(b => { %>
+        <option value=<%= b.id %>><%= b.name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="field">
+        <option value="">A empresa não está cadastrada?</option>
+        <a href="/brand/add">clique aqui</a>
+    </div>
+
+    <div class="field">
+      <label for="nome">Nome:</label>
+      <input required id="name" name="name" type="text" placeholder="Nome do produto" />
+    </div>
+
+    <div class="field">
+      <label for="nome">Quantidade em estoque:</label>
+      <input required id="quantity" name="quantity" type="text" placeholder="Vazio = nenhuma" />
+    </div>
+
+    <button type="submit" class="btn">+ Adicionar Produto</button>
+  </div>
+  </form>
+</body>
+</html>

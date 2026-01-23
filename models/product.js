@@ -6,7 +6,8 @@ const product = sequelize.define('products', {
     id: {
         primaryKey: true,
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        autoIncrement: true
     },
     name: {
         allowNull: false,
@@ -18,6 +19,15 @@ const product = sequelize.define('products', {
     },
     lastPrice: {
         allowNull: true,
+        type: DataTypes.STRING
+    },
+    orded: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    identifier: {
+        allowNull: false,
         type: DataTypes.STRING
     }
 });

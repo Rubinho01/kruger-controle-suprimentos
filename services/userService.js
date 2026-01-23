@@ -20,5 +20,17 @@ async function findUser({ name, password }) {
     return user;
 }
 
+async function findUserByName(userName) {
+    const user = await userModel.findOne({
+        where:{name: userName}
+    })
+    if(!user){
+        throw new Error("usuário não encontrado com esse nome");
+    }
 
-module.exports = {findUser};
+    return user;
+    
+}
+
+
+module.exports = {findUser, findUserByName};
