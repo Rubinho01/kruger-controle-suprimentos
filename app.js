@@ -38,14 +38,13 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pgPool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+  connectionString: process.env.DB_URL,
+  database: process.env.DB_NAME,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
-
 
 app.use(session({
   store: new pgSession({
@@ -56,9 +55,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
-    httpOnly: true,
-    sameSite: 'lax'
+    secure: true,
+    sameSite: 'none'
   }
 }));
 //=======================================================================================
@@ -94,7 +92,7 @@ app.use(function(err, req, res, next) {
     console.log('Conexão com a database realizada!');
     
     // Sincronizar modelos
-    await sequelize.sync({update: true});
+    await sequelize.sync();
     console.log('Database sincronizada!');
   } catch (error) {
     console.error('Erro durante conexão da database:', error);
