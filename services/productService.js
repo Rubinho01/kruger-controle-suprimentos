@@ -2,6 +2,8 @@ const { Sequelize } = require('sequelize');
 const productModel = require('../models/product');
 const brands = require('../models/brand');
 const brandService = require('./brandService');
+const product = require('../models/product');
+const userService = require('./userService');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -30,12 +32,17 @@ async function formBrandNames() {
     return brands
 }
 
-async function insertProduct(name, quantity, brandId) {
+async function insertProduct(name, quantity, brandId, identifier) {
     const brandExist = brandService.findById(brandId);
     if(!brandExist){
         throw new Error("A marca não está cadastrada no sistema");
         
     }
+    const userExist = userService.findUserByName(identifier);
+    if(!userExist){
+        throw new Error("Nome de usuário inválido para criar produto");
+    }
+
     const exist = await productModel.findOne({
         where:{name: name, 
             brandId:brandId}
@@ -49,14 +56,15 @@ async function insertProduct(name, quantity, brandId) {
     }
 
     if(!quantity || quantity===''){
-        await productModel.create({
-            name, brandId
+        const product = await productModel.create({
+            name, brandId, identifier
         })
     }else{
-        await productModel.create({
-            name, quantity, brandId
+        const product = await productModel.create({
+            name, quantity, brandId, identifier
         })
     }
+    return product;
 }
 
 

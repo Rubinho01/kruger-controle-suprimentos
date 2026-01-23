@@ -30,7 +30,7 @@ async function createProduct(req, res) {
     }
 
     try {
-        await productService.insertProduct(name,quantity,brandId);
+        await productService.insertProduct(name,quantity,brandId, req.session.userName);
         res.redirect('/dashboard')
     } catch (error) {
         const brands = await productService.formBrandNames();
