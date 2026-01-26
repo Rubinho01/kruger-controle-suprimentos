@@ -9,6 +9,8 @@ router.post('/add', islogged, productController.createProduct);
 
 router.get('/delete/:id', islogged, productController.deleteProduct);
 
+router.get('/porMarca', islogged, productController.selectByBrand);
+
 
 
 

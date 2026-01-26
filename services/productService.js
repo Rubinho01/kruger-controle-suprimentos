@@ -4,6 +4,8 @@ const brands = require('../models/brand');
 const brandService = require('./brandService');
 const product = require('../models/product');
 const userService = require('./userService');
+const sequelize = require('../config/database');
+const brand = require('../models/brand');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -77,7 +79,24 @@ async function deleteById(productId) {
             id: productId
         }
     });
-    
+}
+async function CountProductsByBrand() {
+    const CountProductsByBrand = await productModel.findAll({
+        attributes:[
+            [sequelize.col('brand.name'), 'brandName'],
+            [sequelize.fn('COUNT', sequelize.col('products.id')), 'totalProducts']
+        ],
+        include:{
+            model: brands,
+            as: 'brand',
+            attributes: []
+        },
+        group: ['brand.name']
+    });
+
+    return CountProductsByBrand;
+        
 }
 
-module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById};
+
+module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand};

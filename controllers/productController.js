@@ -52,4 +52,14 @@ async function deleteProduct(req, res, next) {
     }
 }
 
-module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct};
+async function selectByBrand(req, res, next) {
+    try {
+        const brands = await productService.CountProductsByBrand();
+        console.log(brands);
+        return res.status(200).send('deu certo')
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand};

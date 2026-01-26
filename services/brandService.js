@@ -26,7 +26,11 @@ async function findById(id) {
 
 async function findAll() {
     const brands = await brandModel.findAll();
+    if(!brands){
+        throw new Error("Nenhuma marca foi encontrada no banco");       
+    }
     return brands; 
 }
+
 
 module.exports = {insertBrand, findAll, findById};

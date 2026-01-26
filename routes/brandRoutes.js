@@ -10,4 +10,5 @@ router.get('/add', islogged, function(req,res,next){
 router.post('/add', islogged, brandController.createbrand);
 
 
+
 module.exports = router;
