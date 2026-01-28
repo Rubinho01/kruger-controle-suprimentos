@@ -55,8 +55,7 @@ async function deleteProduct(req, res, next) {
 async function selectByBrand(req, res, next) {
     try {
         const brands = await productService.CountProductsByBrand();
-        console.log(brands);
-        return res.render('brandCards');
+        return res.render('brandCards', {brands, name: req.session.userName});
     } catch (error) {
         return res.status(500).send(error.message);
     }
