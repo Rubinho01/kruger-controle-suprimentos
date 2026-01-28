@@ -93,6 +93,9 @@ async function CountProductsByBrand() {
             attributes: []
         },
         group: ['brand.name'],
+        where: {
+            orded: false
+        }
     });
 
     return CountProductsByBrand;
