@@ -56,7 +56,7 @@ async function selectByBrand(req, res, next) {
     try {
         const brands = await productService.CountProductsByBrand();
         console.log(brands);
-        return res.status(200).send('deu certo')
+        return res.render('brandCards');
     } catch (error) {
         return res.status(500).send(error.message);
     }

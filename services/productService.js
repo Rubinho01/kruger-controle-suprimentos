@@ -23,7 +23,8 @@ async function findAllProducts() {
         },
         where: {
             orded: false
-        }
+        },
+        order: sequelize.literal('products."createdAt" DESC')
     });
 
     return products;
@@ -91,7 +92,7 @@ async function CountProductsByBrand() {
             as: 'brand',
             attributes: []
         },
-        group: ['brand.name']
+        group: ['brand.name'],
     });
 
     return CountProductsByBrand;
