@@ -99,5 +99,19 @@ async function CountProductsByBrand() {
         
 }
 
+async function selectProductsByBrand(brandId) {
+    const brand = await brandService.findById(brandId);
+    const products = await productModel.findAll({
+        where:{
+            brandId: brand.id
+        }
+    });
+    if(!products){
+        throw new Error(`Nenhum produto foi encontrado referente a marca ${brand.name}`);
+    };
+    return products;
+    
+}
 
-module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand};
+
+module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand};

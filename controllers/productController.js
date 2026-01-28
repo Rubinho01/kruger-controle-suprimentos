@@ -61,4 +61,20 @@ async function selectByBrand(req, res, next) {
     }
 }
 
-module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand};
+async function selectOfbrand(req, res, next) {
+    const brandId = req.params.id;
+    if(!brandId){
+        throw new Error("Por favor, indique o Id da marca");
+    }
+    try {
+        const  products = await productService.selectProductsByBrand(brandId);
+        console.log(products);
+        res.status(200).send('deuCerto')
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand,
+    selectOfbrand
+};

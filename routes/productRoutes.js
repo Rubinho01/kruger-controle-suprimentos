@@ -11,6 +11,8 @@ router.get('/delete/:id', islogged, productController.deleteProduct);
 
 router.get('/porMarca', islogged, productController.selectByBrand);
 
+router.get('/brand/:id', islogged, productController.selectOfbrand);
+
 
 
 
