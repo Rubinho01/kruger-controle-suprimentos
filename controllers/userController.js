@@ -14,4 +14,19 @@ async function join(req, res) {
     
 }
 
-module.exports = {join};
+async function logout(req,res) {
+    if(!req.session.userId  || !req.session.userName){
+        throw new Error("O usuário deve estar logado para sair");
+    }
+    try {
+        req.session.destroy((err)=>{
+            if(err) res.status(500).send("Erro ao destruir sessão");
+        });
+        res.redirect('/login')
+    } catch (error) {
+        res.status(401).send(error.message)
+    }
+    
+}
+
+module.exports = {join, logout};

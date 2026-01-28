@@ -117,17 +117,25 @@
       font-size: 14px;
       font-weight: bold;
     }
+    a{
+        text-decoration: none;
+        color: white;
+    }
   </style>
 </head>
 <body>
 <header class="top-bar">
   <div class="logo">
+    <a href="/dashboard">
     <img src="/images/logo.png" alt="Krüger Embalagens" class="logo">
+    </a>
   </div>
 
   <div class="user">
     <%= name %>
-    
+    <a href="/users/logout">
+    <i class="bi bi-box-arrow-right"></i>
+    </a>
   </div>
 </header>
   <div class="header">
