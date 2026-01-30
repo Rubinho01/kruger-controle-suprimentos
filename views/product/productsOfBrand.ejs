@@ -22,8 +22,9 @@
 <body>
 
 <header class="top-bar">
-  <div class="logo">
+    <a href="/dashboard">
     <img src="/images/logo.png" alt="Krüger Embalagens" class="logo">
+    </a>
   </div>
 
   <div class="user">
@@ -43,14 +44,10 @@
         Adicionar um item
       </a>
     </button>
-        <a href="/brand/add" class="add-item">
-        <i class="bi bi-plus-circle"></i>
-        Adicionar uma empresa
-        </a>
   </section>
 
   <section class="items">
-    <h2>Últimos itens adicionados</h2>
+    <h2>Itens que não foram pedidos:</h2>
 
     <div class="items-header">
       <span>Descrição</span>
@@ -61,7 +58,7 @@
 
     <% const orderedProducts = products.filter(p => p.ordered === true) %>
     <% const notOrderedProducts = products.filter(p => p.ordered === false) %>
-    <% products.forEach(p => { %>
+    <% notOrderedProducts.forEach(p => { %>
     <div class="item">
         <span><%= p.name %></span>
         <span><%= p.quantity %></span>
@@ -81,6 +78,38 @@
     </div>
     <% }) %>
   </section>
+
+    <section class="items" style="margin-top: 30px;">
+    <h2>Já pedidos:</h2>
+
+    <div class="items-header">
+      <span>Descrição</span>
+      <span>Último Preço Pago</span>
+      <span>Notificador</span>
+      <span>Ações</span>
+    </div>
+
+    <% orderedProducts.forEach(p => { %>
+    <div class="item">
+        <span><%= p.name %></span>
+        <span><%= p.lastPrice %></span>
+        <span><%= p.identifier %></span>
+        <div class="actions">
+          <a href="#">
+            <button title="Editar">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+          </a>  
+          <a href="/product/delete/<%= p.id %>">
+            <button title="Excluir">
+                <i class="bi bi-trash"></i>
+            </button>
+          </a>
+       </div>
+    </div>
+    <% }) %>
+  </section>
+
 
 </main>
 
