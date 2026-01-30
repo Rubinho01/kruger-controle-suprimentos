@@ -48,7 +48,9 @@ async function insertProduct(name, quantity, brandId, identifier) {
 
     const exist = await productModel.findOne({
         where:{name: name, 
-            brandId:brandId}
+            brandId:brandId,
+            orded: false
+        }
     });
     if(exist){
         throw new Error("Esse produto já foi cadastrado");   
@@ -85,6 +87,7 @@ async function CountProductsByBrand() {
     const CountProductsByBrand = await productModel.findAll({
         attributes:[
             [sequelize.col('brand.name'), 'brandName'],
+            [sequelize.col('brand.id'), 'brandId'],
             [sequelize.fn('COUNT', sequelize.col('products.id')), 'totalProducts']
         ],
         include:{
@@ -92,12 +95,12 @@ async function CountProductsByBrand() {
             as: 'brand',
             attributes: []
         },
-        group: ['brand.name'],
+        group: ['brand.name', 'brand.id'],
         where: {
             orded: false
         }
     });
-
+    console.log(CountProductsByBrand);
     return CountProductsByBrand;
         
 }
@@ -105,6 +108,16 @@ async function CountProductsByBrand() {
 async function selectProductsByBrand(brandId) {
     const brand = await brandService.findById(brandId);
     const products = await productModel.findAll({
+        attributes:{
+            include:[[
+                sequelize.col('brand.name'),'brandName'
+            ]]
+        },
+        include:{
+            model: brands,
+            as: 'brand',
+            attributes:[]
+        },
         where:{
             brandId: brand.id
         }
@@ -114,7 +127,14 @@ async function selectProductsByBrand(brandId) {
     };
     return products;
     
+};
+
+async function selectBrandForProductsOfBrands(brandId) {
+    const brand = await brandService.findById(brandId);
+    return brand;
 }
 
 
-module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand};
+module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand,
+    selectBrandForProductsOfBrands
+};

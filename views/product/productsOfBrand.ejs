@@ -35,29 +35,8 @@
 </header>
 
 <main class="container">
-
   <section class="filters">
-    <h2>Filtros de Pesquisa</h2>
-
-    <div class="filter-buttons">
-      <a href="/product/porMarca">
-        <button class="filter">
-            <i class="bi bi-building"></i> Empresa
-        </button>
-      </a>
-        <button class="filter">
-            <i class="bi bi-box-seam"></i> Sem estoque
-        </button>
-
-        <button class="filter">
-            <i class="bi bi-person-plus"></i> Vendedor
-        </button>
-
-        <button class="filter">
-            <i class="bi bi-check2-circle"></i> Já pedido
-        </button>
-    </div>
-
+    <h2>Itens da empresa: <h2><%= brand.name %></h2></h2>
     <button class="add-item">
       <a href="/product/add">
         <i class="bi bi-plus-circle"></i>
@@ -74,16 +53,16 @@
     <h2>Últimos itens adicionados</h2>
 
     <div class="items-header">
-      <span>Empresa</span>
       <span>Descrição</span>
       <span>Restante</span>
       <span>Notificador</span>
       <span>Ações</span>
     </div>
 
+    <% const orderedProducts = products.filter(p => p.ordered === true) %>
+    <% const notOrderedProducts = products.filter(p => p.ordered === false) %>
     <% products.forEach(p => { %>
     <div class="item">
-        <span><%= p.dataValues.brandName %></span>
         <span><%= p.name %></span>
         <span><%= p.quantity %></span>
         <span><%= p.identifier %></span>

@@ -67,9 +67,13 @@ async function selectOfbrand(req, res, next) {
         throw new Error("Por favor, indique o Id da marca");
     }
     try {
-        const  products = await productService.selectProductsByBrand(brandId);
-        console.log(products);
-        res.status(200).send('deuCerto')
+        const products = await productService.selectProductsByBrand(brandId);
+        const brand = await productService.selectBrandForProductsOfBrands(brandId);
+        res.render('product/productsOfBrand', {
+            name : req.session.userName,
+            products,
+            brand
+        });
     } catch (error) {
         res.status(400).send(error.message);
     }

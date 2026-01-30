@@ -155,15 +155,17 @@
   <!-- Cards -->
   <div class="cards">
     <% brands.forEach( b => { %>
-    <div class="card" style="background-color: <% if(b.dataValues.totalProducts>=3){ %>
+      <a href="/product/brand/<%= b.brandId %>">
+    <div class="card" style=" color: black; background-color: <% if(b.dataValues.totalProducts>=3){ %>
          rgb(255, 75, 75)
     <% }else{ %>
          rgb(250, 250, 86)
     <% } %>">
       <span><%= b.dataValues.brandName %></span>
-      <span class="badge"><%= b.dataValues.totalProducts %></span>
+      <span style="color: black;" class="badge"><%= b.dataValues.totalProducts %></span>
     </div>
     <% }) %>
+    </a>
   </div>
 
 </body>
