@@ -5,7 +5,6 @@ const brandService = require('./brandService');
 const product = require('../models/product');
 const userService = require('./userService');
 const sequelize = require('../config/database');
-const brand = require('../models/brand');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -22,7 +21,7 @@ async function findAllProducts() {
             attributes:[]
         },
         where: {
-            orded: false
+            ordered: false
         },
         order: sequelize.literal('products."createdAt" DESC')
     });
@@ -49,7 +48,7 @@ async function insertProduct(name, quantity, brandId, identifier) {
     const exist = await productModel.findOne({
         where:{name: name, 
             brandId:brandId,
-            orded: false
+            ordered: false
         }
     });
     if(exist){
@@ -97,7 +96,7 @@ async function CountProductsByBrand() {
         },
         group: ['brand.name', 'brand.id'],
         where: {
-            orded: false
+            ordered: false
         }
     });
     console.log(CountProductsByBrand);
@@ -120,7 +119,8 @@ async function selectProductsByBrand(brandId) {
         },
         where:{
             brandId: brand.id
-        }
+        },
+        order: sequelize.literal('products."createdAt" DESC')
     });
     if(!products){
         throw new Error(`Nenhum produto foi encontrado referente a marca ${brand.name}`);

@@ -22,7 +22,7 @@ const product = sequelize.define('products', {
         allowNull: true,
         type: DataTypes.STRING
     },
-    orded: {
+    ordered: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
         defaultValue: false
