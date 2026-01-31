@@ -13,7 +13,7 @@ router.get('/porMarca', islogged, productController.selectByBrand);
 
 router.get('/brand/:id', islogged, productController.selectOfbrand);
 
-
+router.get('/outStock', islogged, productController.productsOutStock);
 
 
 

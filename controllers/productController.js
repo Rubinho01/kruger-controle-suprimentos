@@ -79,6 +79,19 @@ async function selectOfbrand(req, res, next) {
     }
 }
 
+async function productsOutStock(req, res, next) {
+    try {
+        const products = await productService.selectAllOutStock();
+        res.render('product/outStock',{
+             name: req.session.userName,
+             products
+            })
+    } catch (error) {
+        res.status(404).send(error.message);
+    }
+    
+}
+
 module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand,
-    selectOfbrand
+    selectOfbrand, productsOutStock
 };
