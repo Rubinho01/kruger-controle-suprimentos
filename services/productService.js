@@ -148,7 +148,8 @@ async function selectAllOutStock() {
         },
         where:{
             quantity:'Nenhum(a)'
-        }
+        },
+        order: sequelize.literal('products."createdAt" DESC')
     });
     return products;   
 }
