@@ -15,6 +15,7 @@ router.get('/brand/:id', islogged, productController.selectOfbrand);
 
 router.get('/outStock', islogged, productController.productsOutStock);
 
+router.get('/ordered', islogged, productController.allProductsOrdered);
 
 
 

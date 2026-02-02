@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kruger - Itens sem Estoque</title>
+  <title>Kruger - Itens Pedidos</title>
   <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
@@ -62,14 +62,14 @@
   </section>
 
   <section class="items">
-    <h2>Itens faltando no Estoque:</h2>
+    <h2>Itens já pedidos:</h2>
         <% if(products.length>0) { %>
     <h3 style="margin: 15px 0px ;" >tamanho da lista: <%= products.length%> itens </h3>
 
     <div class="items-header">
       <span>Empresa</span>
       <span>Descrição</span>
-      <span>Restante</span>
+      <span>Valor Pago</span>
       <span>Notificador</span>
       <span>Ações</span>
     </div>
@@ -79,7 +79,7 @@
     <div class="item">
         <span><%= p.dataValues.brandName %></span>
         <span><%= p.name %></span>
-        <span><%= p.quantity %></span>
+        <span>R$ <%= p.lastPrice %></span>
         <span><%= p.identifier %></span>
         <div class="actions">
           <a href="#">
@@ -95,7 +95,7 @@
        </div>
     </div>
     <% })}else{ %>
-    <h2>Não há itens faltates</h2>
+    <h2>Não há itens que foram pedidos</h2>
     <% } %>
   </section>
 

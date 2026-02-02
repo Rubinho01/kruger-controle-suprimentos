@@ -154,7 +154,26 @@ async function selectAllOutStock() {
     return products;   
 }
 
+async function selectAllOrdered() {
+    const products = await productModel.findAll({
+        attributes:{
+            include:[
+                [sequelize.col('brand.name'), 'brandName']
+            ]
+        },
+        include:{
+            model:brands,
+            as: 'brand',
+            attributes:[]
+        },
+        where:{
+            ordered: true
+        }
+    });
+    return products;
+};
+
 
 module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand,
-    selectBrandForProductsOfBrands, selectAllOutStock
+    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered
 };

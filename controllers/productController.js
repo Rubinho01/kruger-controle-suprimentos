@@ -92,6 +92,19 @@ async function productsOutStock(req, res, next) {
     
 }
 
+async function allProductsOrdered(req, res) {
+    try {
+        const products = await productService.selectAllOrdered();
+        res.render('product/Ordered',  {
+            name: req.session.userName,
+            products
+        });
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+    
+}
+
 module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand,
-    selectOfbrand, productsOutStock
+    selectOfbrand, productsOutStock, allProductsOrdered
 };
