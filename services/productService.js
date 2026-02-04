@@ -173,7 +173,15 @@ async function selectAllOrdered() {
     return products;
 };
 
+async function findById(id) {
+    const exists = await productModel.findByPk(id);
+    if(!exists){
+        throw new Error("O produto não foi localizado no banco de dados");
+    }
+    return exists;
+}
+
 
 module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand,
-    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered
+    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered, findById
 };

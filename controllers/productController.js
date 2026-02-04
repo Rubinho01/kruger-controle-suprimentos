@@ -105,6 +105,23 @@ async function allProductsOrdered(req, res) {
     
 }
 
+async function showProduct(req, res) {
+    const id = req.params.id;
+    if(!id){
+        throw new Error("informe o Id do produto que deseja alterar");
+    };
+    try {
+        const product = await productService.findById(id);
+        res.render('product/edit', {
+            name: req.session.userName,
+            product,
+            error:false
+        })
+    } catch (error) {
+        res.status(401).send(error.message);
+    }
+}
+
 module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand,
-    selectOfbrand, productsOutStock, allProductsOrdered
+    selectOfbrand, productsOutStock, allProductsOrdered, showProduct
 };

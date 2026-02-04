@@ -17,6 +17,7 @@ router.get('/outStock', islogged, productController.productsOutStock);
 
 router.get('/ordered', islogged, productController.allProductsOrdered);
 
+router.get('/edit/:id', islogged, productController.showProduct);
 
 
 module.exports = router;
