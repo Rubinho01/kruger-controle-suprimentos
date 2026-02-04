@@ -19,5 +19,7 @@ router.get('/ordered', islogged, productController.allProductsOrdered);
 
 router.get('/edit/:id', islogged, productController.showProduct);
 
+router.post('/edit/:id', islogged, productController.editProduct);
+
 
 module.exports = router;

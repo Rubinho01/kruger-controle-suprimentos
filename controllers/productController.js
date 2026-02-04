@@ -46,7 +46,7 @@ async function deleteProduct(req, res, next) {
     }
     try {
         await productService.deleteById(productId);
-        res.redirect('/dashboard')
+        res.redirect('back')
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -122,6 +122,32 @@ async function showProduct(req, res) {
     }
 }
 
+async function editProduct(req, res) {
+    const id = req.params.id;
+        if(!id){
+        throw new Error("Por favor, informe o id do produto que será editado");      
+    }
+
+    const {name, quantity, lastPrice, ordered} = req.body;
+    if(!name){
+        throw new Error("o campo nome é obrigatório");        
+    }
+
+    try {
+        await productService.updateProduct(id, name, quantity, lastPrice, ordered);
+        res.redirect(`/product/edit/${id}`);
+    } catch (error) {
+        const product = await productService.findById(id);
+        res.send(400).render('product/edit',{
+            name: req.session.userName,
+            product,
+            error:true
+        });
+    };
+
+};
+
+
 module.exports = {loadDashboard, loadCreateForm, createProduct, deleteProduct, selectByBrand,
-    selectOfbrand, productsOutStock, allProductsOrdered, showProduct
+    selectOfbrand, productsOutStock, allProductsOrdered, showProduct, editProduct
 };

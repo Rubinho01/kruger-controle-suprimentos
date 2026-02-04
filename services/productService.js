@@ -147,7 +147,8 @@ async function selectAllOutStock() {
             attributes:[]
         },
         where:{
-            quantity:'Nenhum(a)'
+            quantity:'Nenhum(a)',
+            ordered: false
         },
         order: sequelize.literal('products."createdAt" DESC')
     });
@@ -181,7 +182,43 @@ async function findById(id) {
     return exists;
 }
 
+async function updateProduct(id, name, quantity, lastPrice, ordered) {
+    const exists = await findById(id);
+    if(!exists){
+        throw new Error("Produto não encontrado no banco de dados");
+    }
+
+    if(exists.name === name && exists.quantity === quantity && exists.lastPrice === lastPrice){
+        if(exists.ordered === false && !ordered){
+            return;
+        }if(exists.ordered === true && !ordered){
+            await exists.update({ordered: false});
+            return ;           
+        }
+        else{
+            await exists.update({ordered: true});
+            return ;
+        }
+    }
+
+    if(!ordered){
+        await exists.update({name: name,
+            quantity : quantity,
+            lastPrice : lastPrice,
+            ordered : false
+        });
+    }else{
+            await exists.update({name: name,
+            quantity : quantity,
+            lastPrice : lastPrice,
+            ordered : true
+        });
+    }
+
+    return
+}
+
 
 module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand,
-    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered, findById
+    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered, findById, updateProduct
 };

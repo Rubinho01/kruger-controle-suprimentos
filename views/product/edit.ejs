@@ -95,9 +95,11 @@
   <% } %>
   
 
-  <form action="/product/edit" method="post">
+  <form action="/product/edit/<%= product.id %>" method="post">
   <div class="card">
-      <button type="button" style="margin-bottom: 10px; width: 20%; background-color:#6fa8dc; color: white;" onclick="history.back()" class="btn">voltar</button>
+    <a href="/dashboard">
+      <button type="button" style="margin-bottom: 10px; width: 20%; background-color:#6fa8dc; color: white;" class="btn">voltar</button>
+      </a>
     <div class="header">Editar Produto</div>
 
     <div class="field">
@@ -117,12 +119,12 @@
 
     <div class="field">
       <label for="nome">Preço pago:</label>
-      <input id="quantity" name="quantity" type="text" placeholder="Nenhum valor registrado" value="<%= product.lastPrice %>" />
+      <input id="lastPrice" name="lastPrice" type="text" placeholder="Nenhum valor registrado" value="<%= product.lastPrice %>" />
     </div>
 
     <div class="field">
       <label for="nome">Item foi pedido:</label>
-      <input id="quantity" value="true" name="quantity" type="checkbox" placeholder="Vazio = nenhuma" <% if(product.ordered){ %> checked <% } %> />
+      <input id="ordered" value="true" name="ordered" type="checkbox" placeholder="Vazio = nenhuma" <% if(product.ordered){ %> checked <% } %> />
     </div>
 
     <button type="submit" class="btn">Atualizar</button>
