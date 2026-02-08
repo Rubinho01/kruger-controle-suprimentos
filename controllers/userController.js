@@ -7,7 +7,16 @@ async function join(req, res) {
         const user = await userService.findUser({name, password});
         req.session.userId = user.id;
         req.session.userName = user.name;
-        res.redirect('/dashboard');
+
+        req.session.save( err =>{
+            if(err){
+                console.log("Erro ao salvar sessão: "+ err);
+                return res.status(500);
+            }
+            return res.redirect('/dashboard');
+        });
+
+
     } catch (error) {
         res.status(401).send(error.message);
     }
