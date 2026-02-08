@@ -43,7 +43,7 @@ const pgPool = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+    ssl: { rejectUnauthorized: false }
 });
 
 app.use(session({
@@ -55,9 +55,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
-    httpOnly: true,
-    sameSite: 'lax'
+    secure: true,
+    sameSite: 'none'
   }
 }));
 //=======================================================================================
