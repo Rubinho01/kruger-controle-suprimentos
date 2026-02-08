@@ -1,14 +1,25 @@
 var express = require('express');
 var router = express.Router();
 const productController = require('../controllers/productController');
+const islogged = require('../middlewares/isLogged');
 
-router.get('/add', productController.loadCreateForm);
+router.get('/add', islogged, productController.loadCreateForm);
 
-router.post('/add', productController.createProduct);
+router.post('/add', islogged, productController.createProduct);
 
+router.get('/delete/:id', islogged, productController.deleteProduct);
 
+router.get('/porMarca', islogged, productController.selectByBrand);
 
+router.get('/brand/:id', islogged, productController.selectOfbrand);
 
+router.get('/outStock', islogged, productController.productsOutStock);
+
+router.get('/ordered', islogged, productController.allProductsOrdered);
+
+router.get('/edit/:id', islogged, productController.showProduct);
+
+router.post('/edit/:id', islogged, productController.editProduct);
 
 
 module.exports = router;

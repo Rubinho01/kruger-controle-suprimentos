@@ -15,13 +15,14 @@ const product = sequelize.define('products', {
     },
     quantity: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: 'Nenhum(a)'
     },
     lastPrice: {
         allowNull: true,
         type: DataTypes.STRING
     },
-    orded: {
+    ordered: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
         defaultValue: false

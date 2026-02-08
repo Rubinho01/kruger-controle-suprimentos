@@ -4,6 +4,7 @@ const brands = require('../models/brand');
 const brandService = require('./brandService');
 const product = require('../models/product');
 const userService = require('./userService');
+const sequelize = require('../config/database');
 
 async function findAllProducts() {
     const products = await productModel.findAll({
@@ -20,8 +21,9 @@ async function findAllProducts() {
             attributes:[]
         },
         where: {
-            orded: false
-        }
+            ordered: false
+        },
+        order: sequelize.literal('products."createdAt" DESC')
     });
 
     return products;
@@ -45,7 +47,9 @@ async function insertProduct(name, quantity, brandId, identifier) {
 
     const exist = await productModel.findOne({
         where:{name: name, 
-            brandId:brandId}
+            brandId:brandId,
+            ordered: false
+        }
     });
     if(exist){
         throw new Error("Esse produto já foi cadastrado");   
@@ -67,5 +71,154 @@ async function insertProduct(name, quantity, brandId, identifier) {
     return product;
 }
 
+async function deleteById(productId) {
+    const productExists = productModel.findByPk(productId);
+    if(!productExists){
+        throw new Error("O produto que você quer excluir não foi encontrado");
+    }
+    await productModel.destroy({
+        where:{
+            id: productId
+        }
+    });
+}
+async function CountProductsByBrand() {
+    const CountProductsByBrand = await productModel.findAll({
+        attributes:[
+            [sequelize.col('brand.name'), 'brandName'],
+            [sequelize.col('brand.id'), 'brandId'],
+            [sequelize.fn('COUNT', sequelize.col('products.id')), 'totalProducts']
+        ],
+        include:{
+            model: brands,
+            as: 'brand',
+            attributes: []
+        },
+        group: ['brand.name', 'brand.id'],
+        where: {
+            ordered: false
+        }
+    });
+    console.log(CountProductsByBrand);
+    return CountProductsByBrand;
+        
+}
 
-module.exports = {findAllProducts, formBrandNames, insertProduct};
+async function selectProductsByBrand(brandId) {
+    const brand = await brandService.findById(brandId);
+    const products = await productModel.findAll({
+        attributes:{
+            include:[[
+                sequelize.col('brand.name'),'brandName'
+            ]]
+        },
+        include:{
+            model: brands,
+            as: 'brand',
+            attributes:[]
+        },
+        where:{
+            brandId: brand.id
+        },
+        order: sequelize.literal('products."createdAt" DESC')
+    });
+    if(!products){
+        throw new Error(`Nenhum produto foi encontrado referente a marca ${brand.name}`);
+    };
+    return products;
+    
+};
+
+async function selectBrandForProductsOfBrands(brandId) {
+    const brand = await brandService.findById(brandId);
+    return brand;
+}
+
+async function selectAllOutStock() {
+    const products = await productModel.findAll({
+        attributes:{
+            include:[
+                [sequelize.col('brand.name'), 'brandName']
+            ]
+        },
+        include:{
+            model:brands,
+            as: 'brand',
+            attributes:[]
+        },
+        where:{
+            quantity:'Nenhum(a)',
+            ordered: false
+        },
+        order: sequelize.literal('products."createdAt" DESC')
+    });
+    return products;   
+}
+
+async function selectAllOrdered() {
+    const products = await productModel.findAll({
+        attributes:{
+            include:[
+                [sequelize.col('brand.name'), 'brandName']
+            ]
+        },
+        include:{
+            model:brands,
+            as: 'brand',
+            attributes:[]
+        },
+        where:{
+            ordered: true
+        }
+    });
+    return products;
+};
+
+async function findById(id) {
+    const exists = await productModel.findByPk(id);
+    if(!exists){
+        throw new Error("O produto não foi localizado no banco de dados");
+    }
+    return exists;
+}
+
+async function updateProduct(id, name, quantity, lastPrice, ordered) {
+    const exists = await findById(id);
+    if(!exists){
+        throw new Error("Produto não encontrado no banco de dados");
+    }
+
+    if(exists.name === name && exists.quantity === quantity && exists.lastPrice === lastPrice){
+        if(exists.ordered === false && !ordered){
+            return;
+        }if(exists.ordered === true && !ordered){
+            await exists.update({ordered: false});
+            return ;           
+        }
+        else{
+            await exists.update({ordered: true});
+            return ;
+        }
+    }
+
+    if(!ordered){
+        await exists.update({name: name,
+            quantity : quantity,
+            lastPrice : lastPrice,
+            ordered : false
+        });
+    }else{
+            await exists.update({name: name,
+            quantity : quantity,
+            lastPrice : lastPrice,
+            ordered : true
+        });
+    }
+
+    return
+}
+
+
+module.exports = {findAllProducts, formBrandNames, insertProduct, deleteById, CountProductsByBrand, selectProductsByBrand,
+    selectBrandForProductsOfBrands, selectAllOutStock, selectAllOrdered, findById, updateProduct
+};
