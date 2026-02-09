@@ -95,7 +95,7 @@ async function productsOutStock(req, res, next) {
 async function allProductsOrdered(req, res) {
     try {
         const products = await productService.selectAllOrdered();
-        res.render('product/Ordered',  {
+        res.render('product/ordered',  {
             name: req.session.userName,
             products
         });
